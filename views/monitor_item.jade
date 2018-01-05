@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  div topo: #{topo.token}
+  div #{topo.status}
+  div #{topo.isvirtual}
+  div
+    button#build virtual build
+  div 
+    button#probe probe log
+  div
+    button#testprobe test probe
+  div
+    button#moninit monitor initial
+  div
+    button#monstart monitor start
+    div#monitor
+      button#monstop monitor start
+  div.panel
+    h4 结果
+    div#result
+
+
+
+  script(type='text/javascript').
+    console.log($)
+    $(function(){
+      function refresh() {
+        var status = "#{topo.status}"
+        switch(status) {
+        case 'CAL_OK':
+          $('button#build').attr('disabled', false)
+          $('button#probe').attr('disabled', false)
+          $('button#testprobe').attr('disabled', true)
+          $('button#moninit').attr('disabled', true)
+          $('button#monstart').attr('disabled', true)
+          $('div#monitor').hide()
+        break;
+        case 'BUILD_OK':
+          $('button#build').attr('disabled', true)
+          $('button#probe').attr('disabled', true)
+          $('button#testprobe').attr('disabled', false)
+          $('button#moninit').attr('disabled', true)
+          $('button#monstart').attr('disabled', true)
+          $('div#monitor').hide()
+        break;
+        case 'PROBE_OK':
+          $('button#build').attr('disabled', true)
+          $('button#probe').attr('disabled', true)
+          $('button#testprobe').attr('disabled', true)
+          $('button#moninit').attr('disabled', false)
+          $('button#monstart').attr('disabled', true)
+          $('div#monitor').hide()
+        break;
+        case 'MONINIT_OK':
+          $('button#build').attr('disabled', true)
+          $('button#probe').attr('disabled', true)
+          $('button#testprobe').attr('disabled', true)
+          $('button#moninit').attr('disabled', true)
+          $('button#monstart').attr('disabled', false)
+          $('div#monitor').hide()
+        break;
+        case 'MON':
+          $('button#build').attr('disabled', true)
+          $('button#probe').attr('disabled', true)
+          $('button#testprobe').attr('disabled', true)
+          $('button#moninit').attr('disabled', true)
+          $('button#monstart').attr('disabled', true)
+          $('div#monitor').show()
+        break;
+        }
+      }
+      refresh()
+    })

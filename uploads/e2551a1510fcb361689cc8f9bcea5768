@@ -1,0 +1,25 @@
+-----------------17-11-24 10:41:24-----------------
+--------------------------------------------------
+name :topo3.file.britesingle
+---Link1----
+error : [1]
+time : 0.041152
+diagnose time : 38
+---Link2----
+error : [2]
+time : 0.039013
+diagnose time : 35
+---Link3----
+error : [3]
+time : 0.018152
+diagnose time : 12
+---Link4----
+error : [4]
+time : 0.017074
+diagnose time : 17
+---Link5----
+error : [5]
+time : 0.019152
+diagnose time : 24
+
+

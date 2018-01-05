@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  table
+    tr
+      th name
+      th status
+      th isvirtual
+    each item in topos
+      tr
+        td
+          a(href="/monitor?token=#{item.token}") #{item.token}
+        td #{item.status}
+        td #{item.isvirtual}
