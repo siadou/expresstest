@@ -1,14 +1,18 @@
 extends layout
 
 block content
-  table
-    tr
-      th name
-      th status
-      th isvirtual
-    each item in topos
+  div.panel.panel-default
+    div.panel-heading  topo list
+    table.table
       tr
-        td
-          a(href="/monitor?token=#{item.token}") #{item.token}
-        td #{item.status}
-        td #{item.isvirtual}
+        th name
+        th status
+        th isvirtual
+        th 当前拓扑
+      each item in topos
+        tr
+          td
+            a(href="/monitor?token=#{item.token}") #{item.token}
+          td #{item.status}
+          td #{item.isvirtual}
+          td #{item.token === now.env ? '是':'否'}

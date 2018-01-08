@@ -1,32 +1,35 @@
 extends layout
 
 block content
-  div topo: #{topo.token}
-  div #{topo.status}
-  div #{topo.isvirtual}
-  div
-    button#build virtual build
-  div 
-    button#probe probe log
-  div
-    button#testprobe test probe
-  div
-    button#moninit monitor initial
-  div
-    button#monstart monitor start
-    div#monitor
-      button#monstop monitor start
-  div.panel
-    h4 结果
-    div#result
+  div.panel.panel-default
+    div.panel-heading   topo: #{topo.token}
+    div.panel-body
+      div #{topo.status}
+      div #{topo.isvirtual}
+      div
+        button.btn.btn-primary#build virtual build
+      div 
+        button.btn.btn-primary#probe probe log
+      div
+        button.btn.btn-primary#testprobe test probe
+      div
+        button.btn.btn-primary#moninit monitor initial
+      div
+        button.btn.btn-primary#monstart monitor start
+        div#monitor
+          button.btn.btn-primary#monstop monitor stop 
+      div.panel
+        h4 结果
+        div#result
 
 
 
   script(type='text/javascript').
     console.log($)
+    var token = "#{topo.token}"
+    var status = "#{topo.status}"
     $(function(){
       function refresh() {
-        var status = "#{topo.status}"
         switch(status) {
         case 'CAL_OK':
           $('button#build').attr('disabled', false)
@@ -70,5 +73,43 @@ block content
         break;
         }
       }
+      function bind() {
+        $("#build").click(function(){
+          if (!$("#build").attr('disabled')) {
+            $.post('/monitor/build?token=' + token, {}, function(result){
+              console.log(result)
+            })
+          }
+        })
+        $("#testprobe").click(function(){
+          if (!$("#testprobe").attr('disabled')) {
+            $.post('/monitor/testprobe?token=' + token, {}, function(result){
+              console.log(result)
+            })
+          }
+        })
+        $("#moninit").click(function(){
+          if (!$("#moninit").attr('disabled')) {
+            $.post('/monitor/initial?token=' + token, {}, function(result){
+              console.log(result)
+            })
+          }
+        })
+        $("#monstart").click(function(){
+          if (!$("#monstart").attr('disabled')) {
+            $.post('/monitor/start?token=' + token, {}, function(result){
+              console.log(result)
+            })
+          }
+        })
+        $("#monstop").click(function(){
+          if (!$("#monstop").attr('disabled')) {
+            $.post('/monitor/stop?token=' + token, {}, function(result){
+              console.log(result)
+            })
+          }
+        })
+      }
       refresh()
+      bind()
     })

@@ -13,7 +13,9 @@ router.get('/', function(req, res, next) {
     })
   } else {
     Topo.getAll(function(topos) {
-      res.render('monitor_list', { topos: topos });
+      Topo.getNow(function(now) {
+        res.render('monitor_list', { topos: topos, now: now });
+      })
     })
   }
 });
@@ -46,8 +48,8 @@ router.post('/add', cpUpload, function(req, res, next) {
 
 router.post('/build', function(req, res, next) {
   var token = req.query.token
-  Topo.build(token, function(res){
-    res.json(res);
+  Topo.build(token, function(result){
+    res.json(result);
   })
 })
 
@@ -73,18 +75,31 @@ router.post('/setprobe', function(req, res, next) {
 
 router.post('/testprobe', function(req, res, next){
   var token = req.query.token
+  console.log(token)
+  Topo.testProbe(token, function() {
+    res.json({ token: token, status: true})
+  })
 })
 
 router.post('/initial', function(req, res, next) {
   var token = req.query.token
+  Topo.moninit(token, function() {
+    res.json({ token: token, status: true})
+  })
 })
 
 router.post('/start', function(req, res, next) {
   var token = req.query.token
+  Topo.monitor(token, function() {
+    res.json({ token: token, status: true})
+  })
 })
 
 router.post('/stop', function(req, res, next) {
   var token = req.query.token
+  Topo.stop(token, function() {
+    res.json({ token: token, status: true})
+  })
 })
 
 //从虚拟环境中移除当前拓扑
